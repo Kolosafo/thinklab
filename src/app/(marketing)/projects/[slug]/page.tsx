@@ -182,8 +182,8 @@ export default function ProjectDetailPage({ params }: PageProps) {
       </section>
 
       {project?.gallery && project?.gallery.length > 0 && (
-        <section className="py-20 bg-gray-50 flex">
-          <Container className="w-[75%]">
+        <section className="py-20 bg-gray-50 flex md:flex-row flex-col">
+          <Container className="md:w-[75%] w-full">
             <div className="mb-12 text-center md:text-left md:flex md:items-center md:justify-between">
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-0 text-primary">
@@ -241,7 +241,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
               </AnimatePresence>
             </motion.div>
           </Container>
-          <div className="mr-4">
+          <div className="md:mr-4 mr-0">
             <BookingForm projectName={project?.name} />
           </div>
         </section>

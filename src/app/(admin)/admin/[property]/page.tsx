@@ -6,10 +6,15 @@ import { convertToFormattedNaira } from "@/utils/helpers";
 import { Bed, House, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-const Page = ({ params }: { params: { property: string } }) => {
+interface PageProps {
+  params: Promise<{ property: string }>;
+}
+const Page = ({ params }: PageProps) => {
+  const { property } = use(params);
+
   const { properties } = useSelector((store: IRootState) => store.properties);
   const [imgIndex, setImgIndex] = useState(0);
   const [displayProperty, setDisplayProperty] = useState<PropertyType | null>(
@@ -18,9 +23,9 @@ const Page = ({ params }: { params: { property: string } }) => {
   const { isLogged } = useSelector((store: IRootState) => store.user);
   const router = useRouter();
   useEffect(() => {
-    const findProperty = properties.find((item) => item.id === params.property);
+    const findProperty = properties.find((item) => item.id === property);
     if (findProperty) setDisplayProperty(findProperty);
-  }, [params.property, properties]);
+  }, [property, properties]);
 
   useEffect(() => {
     if (!isLogged) {
