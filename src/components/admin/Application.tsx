@@ -31,19 +31,25 @@ const Application = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLogged) return;
-    fetchApplications();
+    if (typeof window !== "undefined") {
+      if (!isLogged) return;
+      fetchApplications();
+    }
   }, [isLogged]);
 
   useEffect(() => {
-    if (!isLogged) {
-      router.push("/auth/login");
+    if (typeof window !== "undefined") {
+      if (!isLogged) {
+        router.push("/auth/login");
+      }
     }
   }, [isLogged, router]);
 
   useEffect(() => {
-    const filterAgents = agents.filter((item) => !item.isReviewed);
-    setFilterAgents(filterAgents);
+    if (typeof window !== "undefined") {
+      const filterAgents = agents.filter((item) => !item.isReviewed);
+      setFilterAgents(filterAgents);
+    }
   }, [agents]);
   return (
     <div>
