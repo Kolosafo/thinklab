@@ -33,7 +33,7 @@ const userSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.isLogged = false;
-      window.location.reload();
+      // window.location.reload();
     },
 
     handleSignUp: (state, { payload }) => {
