@@ -33,7 +33,9 @@ const userSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.isLogged = false;
-      // window.location.reload();
+      if (typeof window !== "undefined") {
+        window.location.reload();
+      }
     },
 
     handleSignUp: (state, { payload }) => {
