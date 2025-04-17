@@ -13,8 +13,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { propertyCollectionRef } from "@/firebase";
 import { useSaveImageToFirebase } from "@/hooks/useSaveImageToFirebase";
 import { states } from "@/lib/constants/states";
-import { createProperties } from "@/redux/properties/propertySlice";
-import { AppDispatch } from "@/redux/store";
+import { addProperty } from "@/redux/properties/propertySlice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { addDoc } from "firebase/firestore";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
@@ -31,6 +31,7 @@ export type PropertyListing = {
   saveImageUris: string[];
 };
 function Page() {
+  const { user, company } = useAppSelector((state) => state.user);
   const { uploadImgToFirebase, isImageUploading } = useSaveImageToFirebase();
   const [isLoading, setIsLoading] = useState(false);
   const [uploadReady, setUploadReady] = useState(false);
@@ -92,7 +93,15 @@ function Page() {
         };
         await addDoc(propertyCollectionRef, reqObj).then((res) => {
           setIsLoading(false);
-          dispatch(createProperties({ ...reqObj, id: res.id }));
+          dispatch(
+            addProperty({
+              ...reqObj,
+              id: res.id,
+              userId: user?.id ?? "",
+              company: company?.name ?? "",
+              size: "",
+            })
+          );
           setUploadReady(false);
           router.push(`/dashboard`);
         });

@@ -52,7 +52,11 @@ const Page = () => {
           <span className="font-bold">THIS POWER OF ATTORNEY</span> is made this{" "}
           {data.dayMade} Day of {data.monthMade}, {data.yearMade}
         </h3>
-
+        <input
+          type="text"
+          className="hidden"
+          onChange={(e) => setData({ ...data, monthMade: e.target.value })}
+        />
         <h1 className="text-4xl font-semibold my-8">BETWEEN</h1>
         <span>
           <span className="font-bold text-2xl uppercase">
