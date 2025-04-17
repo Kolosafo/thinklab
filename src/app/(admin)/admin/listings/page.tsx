@@ -1,10 +1,9 @@
-import DashboardPage from '@/components/PropertList'
-import React from 'react'
+import dynamic from "next/dynamic";
 
-const Page = () => {
-  return (
-    <DashboardPage />
-  )
+const Listing = dynamic(() => import("./Listing"), {
+  ssr: false,
+});
+
+export default function Page() {
+  return <Listing />;
 }
-
-export default Page

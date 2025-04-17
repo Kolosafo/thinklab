@@ -1,6 +1,12 @@
-import React from "react";
-import Application from "@/components/admin/Application";
-const Page = () =>
-  typeof window !== undefined ? <Application /> : <div></div>;
+import dynamic from "next/dynamic";
 
-export default Page;
+const AdminApplications = dynamic(
+  () => import("@/components/admin/Application"),
+  {
+    ssr: false,
+  }
+);
+
+export default function Page() {
+  return <AdminApplications />;
+}
