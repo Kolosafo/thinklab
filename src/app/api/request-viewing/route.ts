@@ -1,9 +1,8 @@
 import RequestView from "@/components/email/RequestView";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: Request) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const { projectName, name, email, phone, selectedDate, subject } =
       await request.json();
