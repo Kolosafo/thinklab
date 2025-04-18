@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const navItems = [
@@ -37,6 +38,7 @@ export default function Header() {
     },
   };
 
+  const router = useRouter();
   const linkVariants = {
     top: { color: "rgba(255, 255, 255, 0.9)" },
     scrolled: { color: "#111827" },
@@ -84,7 +86,7 @@ export default function Header() {
         </nav>
 
         <motion.div>
-          <Button className="font-medium" size="lg">
+          <Button onClick={() => router.push("/auth/register")} className="font-medium" size="lg">
             Register
           </Button>
         </motion.div>
