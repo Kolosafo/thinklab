@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
+      <section className="relative w-full h-[50%] md:h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/home-hero.jpg"
@@ -80,7 +80,7 @@ export default function Home() {
           </Link>
         </div> */}
         <div style={{ zIndex: 50 }} className="container z-50 w-full">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-white mt-20 text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-white md:mt-20 text-center mt-28">
             Our Featured Properties
           </h1>
           <ActiveSlider />

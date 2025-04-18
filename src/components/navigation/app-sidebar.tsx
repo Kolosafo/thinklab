@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Mail, Plus } from "lucide-react";
+import { Home } from "lucide-react";
 import * as React from "react";
 
 import { NavLinks } from "@/components/navigation/nav-links";
@@ -20,18 +20,18 @@ const links = [
     icon: Home,
     requiresAuth: false,
   },
-  {
-    name: "New Listing",
-    url: "/dashboard/new",
-    icon: Plus,
-    requiresAuth: true,
-  },
-  {
-    name: "Requests",
-    url: "/dashboard/requests",
-    icon: Mail,
-    requiresAuth: true,
-  },
+  // {
+  //   name: "New Listing",
+  //   url: "/dashboard/new",
+  //   icon: Plus,
+  //   requiresAuth: true,
+  // },
+  // {
+  //   name: "Requests",
+  //   url: "/dashboard/requests",
+  //   icon: Mail,
+  //   requiresAuth: true,
+  // },
 ];
 
 const user = {

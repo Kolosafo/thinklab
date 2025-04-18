@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Mail, Plus, ChartBar, FileUser } from "lucide-react";
+import { Home, Plus, ChartBar, FileUser } from "lucide-react";
 import * as React from "react";
 
 import { NavLinks } from "@/components/navigation/nav-links";
@@ -36,11 +36,11 @@ const links = [
     url: "/admin/listings",
     icon: ChartBar,
   },
-  {
-    name: "Appoinments",
-    url: "/admin/apointment",
-    icon: Mail,
-  },
+  // {
+  //   name: "Appoinments",
+  //   url: "/admin/apointment",
+  //   icon: Mail,
+  // },
   // {
   //   name: "Agents",
   //   url: "/admin/agents",

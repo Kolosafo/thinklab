@@ -25,7 +25,7 @@ const ActiveSlider = () => {
 
   const router = useRouter();
   return (
-    <div className="flex items-center justify-center flex-col h-[700px] w-full">
+    <div className="flex items-center justify-center flex-col md:h-[700px] h-[400px] w-full">
       <CustomAnimation
         className="mb-4 w-[30%] self-center flex items-center justify-center h-20"
         animation="fade-up"
@@ -44,16 +44,20 @@ const ActiveSlider = () => {
           modules={[Autoplay]}
           //   onSlideChange={(s) => setIndex(s.activeIndex)}
           //   spaceBetween={100}
-          className="h-full flex justify-center self-center items-center"
+          className="h-full flex justify-center self-center items-center md:flex-row flex-col"
         >
-          <SwiperSlide className="text-white text-4xl font-bold flex text-center items-center">
+          <SwiperSlide className="text-white md:text-4xl text-xl font-bold flex text-center items-center">
             <h1>INNOVATION</h1>
           </SwiperSlide>
-          <SwiperSlide className="text-white text-4xl font-bold flex text-center items-center">
-            <h1 className="text-red-400 text-4xl font-bold">DEVELOPMENT</h1>
+          <SwiperSlide className="text-white md:text-4xl text-xl font-bold flex text-center items-center">
+            <h1 className="text-red-400 md:text-4xl text-xl font-bold">
+              DEVELOPMENT
+            </h1>
           </SwiperSlide>
-          <SwiperSlide className="text-white text-4xl font-bold flex text-center items-center">
-            <h1 className="text-green-400 text-4xl font-bold">FINANCE</h1>
+          <SwiperSlide className="text-whitemd:text-4xl text-xl font-bold flex text-center items-center">
+            <h1 className="text-green-400md:text-4xl text-xl font-bold">
+              FINANCE
+            </h1>
           </SwiperSlide>
         </Swiper>
       </CustomAnimation>
@@ -92,6 +96,8 @@ const ActiveSlider = () => {
             onClick={() => {
               router.push(`/projects/${item.id}`);
             }}
+            className=""
+            style={{ display: "flex" }}
           >
             <motion.div
               onHoverStart={() => {
