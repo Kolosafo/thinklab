@@ -1,7 +1,7 @@
 import RequestView from "@/components/email/RequestView";
 import { Resend } from "resend";
 
-const resend = new Resend("re_j39S8xnB_FYaQNxn9rsJkp9yarCezUpfi");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
