@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const navItems = [
+export const navItems = [
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
   { label: "Contact", href: "/contact" },
@@ -47,7 +47,7 @@ export default function Header() {
   return (
     <motion.header
       className={cn(
-        "fixed top-0 left-0 right-0 z-100",
+        "hidden md:block fixed top-0 left-0 right-0 z-100",
         isScrolled ? "mx-4 md:mx-8 rounded-2xl" : "w-full"
       )}
       initial="top"
