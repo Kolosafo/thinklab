@@ -64,6 +64,7 @@ export default function Header() {
               width={150}
               height={80}
               className="object-contain"
+              unoptimized
             />
           </Link>
         </motion.div>

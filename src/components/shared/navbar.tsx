@@ -21,6 +21,7 @@ export function Navbar({ children }: NavbarProps) {
               width={150}
               height={80}
               className='object-contain'
+              unoptimized
             />
           </Link>
         </div>

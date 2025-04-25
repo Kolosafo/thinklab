@@ -53,6 +53,7 @@ function MobileNav() {
             width={80}
             height={30}
             className="object-contain"
+            unoptimized
           />
         </Link>
 
