@@ -9,6 +9,7 @@ export function useKYC(onSubmit: (data: KYCFormData) => void) {
     email: "",
     phoneNumber: "",
     dateOfBirth: "",
+    occupation: "employed",
     gender: "Male",
     nationality: "",
     governmentIDType: "NIN",
@@ -23,6 +24,41 @@ export function useKYC(onSubmit: (data: KYCFormData) => void) {
     isVerified: false,
     verificationDate: "",
     isReviewed: false,
+    politicallyExposedPerson: false,
+    maritalStatus: "single",
+
+    // PROPERTY DETAILS
+    propertyAddress: "",
+    propertyType: "residential",
+    propertyPrice: 0,
+    dateOfPurchase: "",
+
+    // EMPLOYMENT
+    currentEmployer: "",
+    employerAddress: "",
+    position: "",
+    workPhoneNumber: "",
+    otherIncomeSources: "",
+    annualIncome: "",
+    incomeFrequency: "",
+    incomeType: "",
+    settlementType: "full time",
+
+    // FINANCIAL INFO
+    outrightPurchase: false,
+    purchaseMedium: "bankTransfer",
+    purchaseTimeframe: "",
+    purchaseWithLoan: false,
+    lenderBank: "",
+    loanAmount: 0,
+    downpaymentAmount: 0,
+    totalPaymentAvailableAmount: 0,
+
+    // ADDITIONAL INFO
+    legalRestrictionsPurchase: false,
+    legalRestrictionsPurchaseExplanation: "",
+    previousPurchase: false,
+    previousPurchaseDetails: "",
   });
 
   const [errors, setErrors] = useState<ValidationErrors>({});

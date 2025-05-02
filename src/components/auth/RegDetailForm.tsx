@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,8 @@ import { sendApplicationEmail } from "@/lib/api/application";
 import { useDispatch } from "react-redux";
 import { loadAgent } from "@/redux/agent/agentSlice";
 import { useGetApplications } from "@/hooks/useGetApplications";
+import Checkbox from "../ui/checkbox";
+import { Calendar } from "../ui/calendar";
 
 export default function RegDetailForm() {
   const { fetchApplications, checkIsAgent } = useGetApplications();
@@ -123,15 +126,14 @@ export default function RegDetailForm() {
 
         <div className="space-y-2">
           <Label htmlFor="name">Date of Birth</Label>
-          <Input
-            id="dob"
-            type="date"
-            placeholder="080000000"
-            value={kycFormData.dateOfBirth}
-            onChange={(event) =>
-              handleChange("dateOfBirth", event.target.value)
+          <Calendar
+            mode="single"
+            // selected={kycFormData.dateOfBirth.toS}
+            onSelect={(val) =>
+              handleChange("dateOfBirth", val?.toDateString() ?? "")
             }
-            aria-invalid={!!errors.dateOfBirth}
+            className="border rounded-md p-2 w-fit"
+            disabled={(date) => date > new Date()}
           />
           {errors.dateOfBirth && (
             <p className="text-xs text-red-500">{errors.dateOfBirth}</p>
@@ -218,6 +220,22 @@ export default function RegDetailForm() {
           )}
         </div>
 
+        <div className="space-y-2">
+          <Label htmlFor="name">Are you a politically exposed person?</Label>
+
+          <Checkbox
+            fieldName="politicallyExposedPerson"
+            onChange={(fieldName: any, value) => handleChange(fieldName, value)}
+            checked={kycFormData.politicallyExposedPerson}
+          />
+
+          {errors.politicallyExposedPerson && (
+            <p className="text-xs text-red-500">
+              {errors.politicallyExposedPerson}
+            </p>
+          )}
+        </div>
+
         <span className="text-3xl font-semibold mt-8">Company Information</span>
         <div className="space-y-2">
           <Label htmlFor="name">Company Name</Label>
@@ -287,6 +305,401 @@ export default function RegDetailForm() {
           />
           {errors.governmentIDNumber && (
             <p className="text-xs text-red-500">{errors.governmentIDNumber}</p>
+          )}
+        </div>
+
+        {/* PROPERTY DETAILS */}
+        <span className="text-3xl font-semibold mt-8">Property Details</span>
+        <div className="space-y-2">
+          <Label htmlFor="name">Property address</Label>
+          <Input
+            id="propertyAddress"
+            placeholder="Plot 506"
+            value={kycFormData.propertyAddress}
+            onChange={(event) =>
+              handleChange("propertyAddress", event.target.value)
+            }
+            aria-invalid={!!errors.propertyAddress}
+          />
+          {errors.propertyAddress && (
+            <p className="text-xs text-red-500">{errors.propertyAddress}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="state">Property Type</Label>
+          <Select
+            onValueChange={(value) => handleChange("propertyType", value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Property Type" />
+            </SelectTrigger>
+            <SelectContent>
+              {["residential", "commercial", "land"].map((_id) => (
+                <SelectItem key={_id} value={_id}>
+                  {_id}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.propertyType && (
+            <p className="text-xs text-red-500">{errors.propertyType}</p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="name">Property price</Label>
+          <Input
+            type="number"
+            id="propertyPrice"
+            placeholder="N50,000,000"
+            value={kycFormData.propertyPrice}
+            onChange={(event) =>
+              handleChange("propertyPrice", event.target.value)
+            }
+            aria-invalid={!!errors.propertyPrice}
+          />
+          {errors.propertyPrice && (
+            <p className="text-xs text-red-500">{errors.propertyPrice}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">Proposed date of purchase</Label>
+          <Calendar
+            mode="single"
+            // selected={kycFormData.dateOfBirth.toS}
+            onSelect={(val) =>
+              handleChange("dateOfPurchase", val?.toDateString() ?? "")
+            }
+            className="border rounded-md p-2 w-fit"
+            disabled={(date) => date < new Date()}
+          />
+
+          {errors.dateOfPurchase && (
+            <p className="text-xs text-red-500">{errors.dateOfPurchase}</p>
+          )}
+        </div>
+
+        {/* FINANCIAL INFORMATION */}
+        <span className="text-3xl font-semibold mt-8">
+          FINANCIAL INFORMATION
+        </span>
+        <div className="space-y-2">
+          <Label htmlFor="name">Are you making outright purchase?</Label>
+          <Checkbox
+            fieldName="outrightPurchase"
+            onChange={(fieldName: any, value) => handleChange(fieldName, value)}
+            checked={kycFormData.outrightPurchase}
+          />
+
+          {errors.outrightPurchase && (
+            <p className="text-xs text-red-500">{errors.outrightPurchase}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="state">Purchase Type Preference</Label>
+          <Select
+            onValueChange={(value) => handleChange("purchaseMedium", value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Purchase Preference" />
+            </SelectTrigger>
+            <SelectContent>
+              {["Bank Transfer", "Financing/mortage", "Installment Plan"].map(
+                (_id) => (
+                  <SelectItem key={_id} value={_id}>
+                    {_id}
+                  </SelectItem>
+                )
+              )}
+            </SelectContent>
+          </Select>
+          {errors.purchaseMedium && (
+            <p className="text-xs text-red-500">{errors.purchaseMedium}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="state">Prefered Timeframe for Purchase</Label>
+          <Select
+            onValueChange={(value) => handleChange("purchaseTimeframe", value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select prefered timeframe" />
+            </SelectTrigger>
+            <SelectContent>
+              {[
+                "Immediately",
+                "1-3 months",
+                "3-6 months",
+                "6 months and beyond",
+              ].map((_id) => (
+                <SelectItem key={_id} value={_id}>
+                  {_id}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.purchaseTimeframe && (
+            <p className="text-xs text-red-500">{errors.purchaseTimeframe}</p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="name">
+            Are you purchasing the property with a loan?
+          </Label>
+
+          <Checkbox
+            fieldName="purchaseWithLoan"
+            onChange={(fieldName: any, value) => handleChange(fieldName, value)}
+            checked={kycFormData.purchaseWithLoan}
+          />
+
+          {errors.purchaseWithLoan && (
+            <p className="text-xs text-red-500">{errors.purchaseWithLoan}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">If Yes, Name of Lender/Bank</Label>
+          <Input
+            id="lenderBank"
+            placeholder="Fulus Capital"
+            value={kycFormData.lenderBank}
+            onChange={(event) => handleChange("lenderBank", event.target.value)}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">Loan Amount (if applicable)</Label>
+          <Input
+            type="number"
+            id="loanAmount"
+            placeholder="N50,000,000"
+            value={kycFormData.loanAmount}
+            onChange={(event) => handleChange("loanAmount", event.target.value)}
+            // aria-invalid={!!errors.loanAmount}
+          />
+          {/* {errors.loanAmount && (
+            <p className="text-xs text-red-500">{errors.loanAmount}</p>
+          )} */}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">Down payment amount</Label>
+          <Input
+            type="number"
+            id="downpaymentAmount"
+            placeholder="N50,000,000"
+            value={kycFormData.downpaymentAmount}
+            onChange={(event) =>
+              handleChange("downpaymentAmount", event.target.value)
+            }
+            aria-invalid={!!errors.downpaymentAmount}
+          />
+          {errors.downpaymentAmount && (
+            <p className="text-xs text-red-500">{errors.downpaymentAmount}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">Total amount available for payment</Label>
+          <Input
+            type="number"
+            id="totalPaymentAvailableAmount"
+            placeholder="N50,000,000"
+            value={kycFormData.totalPaymentAvailableAmount}
+            onChange={(event) =>
+              handleChange("totalPaymentAvailableAmount", event.target.value)
+            }
+            aria-invalid={!!errors.totalPaymentAvailableAmount}
+          />
+          {errors.totalPaymentAvailableAmount && (
+            <p className="text-xs text-red-500">
+              {errors.totalPaymentAvailableAmount}
+            </p>
+          )}
+        </div>
+
+        {/* EMPLOYMENT DETAILS */}
+        <span className="text-3xl font-semibold mt-8">EMPLOYMENT DETAILS</span>
+        <div className="space-y-2">
+          <Label htmlFor="name">Current Employer</Label>
+          <Input
+            id="currentEmployer"
+            placeholder=""
+            value={kycFormData.currentEmployer}
+            onChange={(event) =>
+              handleChange("currentEmployer", event.target.value)
+            }
+            aria-invalid={!!errors.currentEmployer}
+          />
+          {errors.currentEmployer && (
+            <p className="text-xs text-red-500">{errors.currentEmployer}</p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="name">Position/Title</Label>
+          <Input
+            id="position"
+            placeholder="Manager"
+            value={kycFormData.position}
+            onChange={(event) => handleChange("position", event.target.value)}
+            aria-invalid={!!errors.position}
+          />
+          {errors.position && (
+            <p className="text-xs text-red-500">{errors.position}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">Annual Income (before tax)</Label>
+          <Input
+            id="annualIncome"
+            type="number"
+            placeholder="N20,000,000"
+            value={kycFormData.annualIncome}
+            onChange={(event) =>
+              handleChange("annualIncome", event.target.value)
+            }
+            aria-invalid={!!errors.annualIncome}
+          />
+          {errors.annualIncome && (
+            <p className="text-xs text-red-500">{errors.annualIncome}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">Employer Address</Label>
+          <Input
+            id="employerAddress"
+            placeholder="No 61..."
+            value={kycFormData.employerAddress}
+            onChange={(event) =>
+              handleChange("employerAddress", event.target.value)
+            }
+            aria-invalid={!!errors.employerAddress}
+          />
+          {errors.employerAddress && (
+            <p className="text-xs text-red-500">{errors.employerAddress}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">Work Phone Number</Label>
+          <Input
+            id="workPhoneNumber"
+            placeholder="080..."
+            value={kycFormData.workPhoneNumber}
+            onChange={(event) =>
+              handleChange("workPhoneNumber", event.target.value)
+            }
+            aria-invalid={!!errors.workPhoneNumber}
+          />
+          {errors.workPhoneNumber && (
+            <p className="text-xs text-red-500">{errors.workPhoneNumber}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="state">Purchase Type Preference</Label>
+          <Select
+            onValueChange={(value) => handleChange("purchaseMedium", value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Purchase Preference" />
+            </SelectTrigger>
+            <SelectContent>
+              {["bankTransfer", "financing/mortage", "installment Plan"].map(
+                (_id) => (
+                  <SelectItem key={_id} value={_id}>
+                    {_id}
+                  </SelectItem>
+                )
+              )}
+            </SelectContent>
+          </Select>
+          {errors.purchaseMedium && (
+            <p className="text-xs text-red-500">{errors.purchaseMedium}</p>
+          )}
+        </div>
+
+        {/* ADDITIONAL INFORMATION  */}
+        <span className="text-3xl font-semibold mt-8">
+          ADDITIONAL INFORMATION
+        </span>
+        <div className="space-y-2">
+          <Label htmlFor="name">
+            Are there any legal restrictions preventing the purchase of this
+            property?
+          </Label>
+          {/* <RadioGroup /> */}
+          <Checkbox
+            fieldName="legalRestrictionsPurchase"
+            onChange={(fieldName: any, value) => handleChange(fieldName, value)}
+            checked={kycFormData.legalRestrictionsPurchase}
+          />
+
+          {errors.legalRestrictionsPurchase && (
+            <p className="text-xs text-red-500">
+              {errors.legalRestrictionsPurchase}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">If yes please explain</Label>
+          <Input
+            id="legalRestrictionsPurchaseExplanation"
+            placeholder=""
+            value={kycFormData.legalRestrictionsPurchaseExplanation}
+            onChange={(event) =>
+              handleChange(
+                "legalRestrictionsPurchaseExplanation",
+                event.target.value
+              )
+            }
+            aria-invalid={!!errors.legalRestrictionsPurchaseExplanation}
+          />
+          {errors.legalRestrictionsPurchaseExplanation && (
+            <p className="text-xs text-red-500">
+              {errors.legalRestrictionsPurchaseExplanation}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">
+            Have you previously purchased any property from us, or any other
+            developer?
+          </Label>
+          <Checkbox
+            fieldName="previousPurchase"
+            onChange={(fieldName: any, value) => handleChange(fieldName, value)}
+            checked={kycFormData.previousPurchase}
+          />
+
+          {errors.previousPurchase && (
+            <p className="text-xs text-red-500">{errors.previousPurchase}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="name">If yes please explain</Label>
+          <Input
+            id="previousPurchaseDetails"
+            placeholder=""
+            value={kycFormData.previousPurchaseDetails}
+            onChange={(event) =>
+              handleChange("previousPurchaseDetails", event.target.value)
+            }
+            aria-invalid={!!errors.previousPurchaseDetails}
+          />
+          {errors.previousPurchaseDetails && (
+            <p className="text-xs text-red-500">
+              {errors.previousPurchaseDetails}
+            </p>
           )}
         </div>
 

@@ -52,7 +52,9 @@ export type KYCFormData = {
   email: string;
   phoneNumber: string;
   dateOfBirth: string; // ISO format: YYYY-MM-DD
+  politicallyExposedPerson: boolean;
   gender: "Male" | "Female";
+  maritalStatus: "single" | "married" | "divorced" | "widowed";
   nationality: string;
   governmentIDType: "NIN" | "Passport" | "DriverLicense" | "Other";
   governmentIDNumber: string;
@@ -68,4 +70,38 @@ export type KYCFormData = {
   isVerified: boolean;
   isReviewed: boolean;
   verificationDate?: string;
+
+  // PROPERTY DETAILS
+  propertyAddress: string;
+  propertyType: "residential" | "commercial" | "land";
+  propertyPrice: number;
+  dateOfPurchase: string;
+
+  // EMPLOYMENT
+  occupation: "employed" | "self employed" | "unemployed";
+  currentEmployer: string;
+  employerAddress: string;
+  position: string;
+  workPhoneNumber: string;
+  otherIncomeSources: string;
+  annualIncome: string;
+  incomeFrequency: string;
+  incomeType: string;
+  settlementType: "installment" | "full time";
+
+  // FINANCIAL INFO
+  outrightPurchase: boolean;
+  purchaseMedium: "bankTransfer" | "financing/mortage" | "installment Plan";
+  purchaseTimeframe: string;
+  purchaseWithLoan: boolean;
+  lenderBank?: string;
+  loanAmount?: number;
+  downpaymentAmount?: number;
+  totalPaymentAvailableAmount: number;
+
+  // ADDITIONAL INFO
+  legalRestrictionsPurchase: boolean;
+  legalRestrictionsPurchaseExplanation: string;
+  previousPurchase: boolean;
+  previousPurchaseDetails?: string;
 };

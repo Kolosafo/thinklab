@@ -24,16 +24,16 @@ const footerLinks = {
   ],
   services: [
     { label: 'Property Search', href: '/search' },
-    { label: 'Virtual Tours', href: '/virtual-tours' },
-    { label: 'Financing', href: '/financing' },
-    { label: 'Market Analysis', href: '/market-analysis' },
+    // { label: 'Virtual Tours', href: '/virtual-tours' },
+    // { label: 'Financing', href: '/financing' },
+    // { label: 'Market Analysis', href: '/market-analysis' },
   ],
 };
 
 const legalLinks = [
   { label: 'Privacy Policy', href: '/privacy' },
-  { label: 'Terms of Service', href: '/terms' },
-  { label: 'Cookie Policy', href: '/cookies' },
+  // { label: 'Terms of Service', href: '/terms' },
+  // { label: 'Cookie Policy', href: '/cookies' },
 ];
 
 export default function Footer() {

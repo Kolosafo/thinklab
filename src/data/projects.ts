@@ -270,9 +270,9 @@ export const projects = [
     name: "Bakasi Estate",
     image: "/img/bakasi/1.jpg",
     heroImage: "/img/bakasi/2.jpg",
-    description: "Spacious 5-bedroom villa with stunning lake views.",
+    description: "400 Houses (394 two bedroom semi detached and 4 units of 4 bedrooms duplex)",
     fullDescription:
-      "Nestled by the serene lakeside, this modern villa stands as a testament to architectural brilliance and luxurious living. Offering five expansive bedrooms, each designed with comfort and style in mind, the residence boasts panoramic windows that frame the breathtaking lake views. The open-plan living spaces are enhanced by cutting-edge smart home technology, ensuring convenience at your fingertips. An artful blend of contemporary design, expansive spaces, and impeccable finishes make this property a truly unique find.",
+      "400 Houses (394 two bedroom semi detached and 4 units of 4 bedrooms duplex)",
     stats: [
       { icon: "BedIcon", value: 5, unit: "", label: "Bedrooms" },
       { icon: "BathIcon", value: 4, unit: "", label: "Bathrooms" },

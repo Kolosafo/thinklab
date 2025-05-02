@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { use } from "react";
 import { BookButton } from "@/components/sections/projects";
-import BookingForm from "@/components/ui/BookingForm";
+// import BookingForm from "@/components/ui/BookingForm";
 
 const iconMap: { [key: string]: React.ElementType } = {
   BedIcon: BedDouble,
@@ -241,9 +241,9 @@ export default function ProjectDetailPage({ params }: PageProps) {
               </AnimatePresence>
             </motion.div>
           </Container>
-          <div className="md:mr-4 mr-0">
+          {/* <div className="md:mr-4 mr-0">
             <BookingForm projectName={project?.name} />
-          </div>
+          </div> */}
         </section>
       )}
 
