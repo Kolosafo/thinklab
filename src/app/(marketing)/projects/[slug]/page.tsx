@@ -18,7 +18,7 @@ import {
 import { use } from "react";
 import { BookButton } from "@/components/sections/projects";
 import MortgageCalculator from "@/components/ui/MortgageCalculator";
-import BookingForm from "@/components/ui/BookingForm";
+// import BookingForm from "@/components/ui/BookingForm";
 // import BookingForm from "@/components/ui/BookingForm";
 
 const iconMap: { [key: string]: React.ElementType } = {
