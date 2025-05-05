@@ -153,3 +153,31 @@ export function generatePassword(length = 8) {
 
   return password;
 }
+
+
+/**
+ * Calculates monthly mortgage payment.
+ * 
+ * @param principal - Total loan amount (e.g., 200000)
+ * @param annualInterestRate - Annual interest rate in percent (e.g., 6.5 for 6.5%)
+ * @param loanTermYears - Loan term in years (e.g., 30)
+ * @returns Monthly payment amount
+ */
+export function calculateMortgage(
+  principal: number,
+  annualInterestRate: number,
+  loanTermYears: number
+): number {
+  const monthlyRate = annualInterestRate / 100 / 12;
+  const totalPayments = loanTermYears * 12;
+
+  if (monthlyRate === 0) {
+    return principal / totalPayments; // No interest
+  }
+
+  const monthlyPayment =
+    (principal * monthlyRate) /
+    (1 - Math.pow(1 + monthlyRate, -totalPayments));
+
+  return Math.round(monthlyPayment * 100) / 100; // Round to 2 decimal places
+}

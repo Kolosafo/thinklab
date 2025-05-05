@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { use } from "react";
 import { BookButton } from "@/components/sections/projects";
+import MortgageCalculator from "@/components/ui/MortgageCalculator";
+import BookingForm from "@/components/ui/BookingForm";
 // import BookingForm from "@/components/ui/BookingForm";
 
 const iconMap: { [key: string]: React.ElementType } = {
@@ -218,9 +220,9 @@ export default function ProjectDetailPage({ params }: PageProps) {
               className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-2 "
             >
               <AnimatePresence mode="popLayout">
-                {filteredGallery?.map((image) => (
+                {filteredGallery?.map((image, id) => (
                   <motion.div
-                    key={image.src}
+                    key={id}
                     layout
                     variants={galleryVariants}
                     initial="hidden"
@@ -241,9 +243,10 @@ export default function ProjectDetailPage({ params }: PageProps) {
               </AnimatePresence>
             </motion.div>
           </Container>
-          {/* <div className="md:mr-4 mr-0">
-            <BookingForm projectName={project?.name} />
-          </div> */}
+          <div className="md:mr-4 mr-0">
+          <MortgageCalculator projectName={project?.name} /> 
+          </div>
+          {/* <MortgageCalculator projectName={project?.name} /> */}
         </section>
       )}
 

@@ -8,13 +8,14 @@ import ActiveSlider from "@/components/slider-card";
 import { Button } from "@/components/ui/button";
 // import { listings } from "@/data/listings";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 // import Link from "next/link";
 
 export default function Home() {
   // const trendingProperties = listings
   //   .filter((listing) => listing.owner === "ThinkLab")
   //   .slice(0, 8);
-
+  const router = useRouter();
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -185,7 +186,10 @@ export default function Home() {
           </p>
           <Button
             size="lg"
-            className="bg-white text-red-600 hover:bg-gray-100 rounded-full px-8"
+            className="bg-white text-red-600 hover:bg-gray-100 rounded-full px-8 cursor-pointer"
+            onClick={() => {
+              router.push("/auth/register")
+            }}
           >
             Get Started Today
           </Button>
