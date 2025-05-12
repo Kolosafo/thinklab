@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
 import { useMortgageCalculator } from "@/hooks/useCalculateMortgage";
+import { convertToFormattedNaira } from "@/utils/helpers";
 
 // Form schema for booking
 const formSchema = z.object({
@@ -124,7 +125,7 @@ const MortgageCalculator = ({
               {/* {isLoading && (
                 <Loader2 className="size-4 animate-spin transition" />
               )} */}
-              {monthlyPayment}
+              {convertToFormattedNaira(monthlyPayment)}
               {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
             </Button>
           </form>
