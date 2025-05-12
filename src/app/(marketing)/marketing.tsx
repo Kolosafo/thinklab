@@ -1,5 +1,4 @@
 "use client";
-import SlideText from "@/components/newAnimation";
 // import AnimatedImage from "@/components/motion/animated-image";
 // import { PropertyCard } from "@/components/property-card";
 // import { SearchBar } from "@/components/search-bar";
@@ -88,7 +87,6 @@ export default function Home() {
           <ActiveSlider />
         </div>
       </section>
-      <SlideText />
       {/* SEARCH SECTION */}
       {/* <section className="relative min-h-[30vh] flex items-center justify-center -mt-20">
         <Image

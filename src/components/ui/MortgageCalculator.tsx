@@ -15,7 +15,8 @@ import * as z from "zod";
 import { toast } from "sonner";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { useMortgageCalculator } from "@/hooks/useCalculateMortgage";
 
 // Form schema for booking
 const formSchema = z.object({
@@ -24,7 +25,13 @@ const formSchema = z.object({
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
 });
 
-const MortgageCalculator = ({ projectName }: { projectName: string }) => {
+const MortgageCalculator = ({
+  projectName,
+  propertyCost,
+}: {
+  projectName: string;
+  propertyCost: number;
+}) => {
   //   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,6 +43,16 @@ const MortgageCalculator = ({ projectName }: { projectName: string }) => {
       interestRate: 0,
       phone: "",
     },
+  });
+
+  // Watch values from the form
+  const _interestRate = form.watch("interestRate");
+  const _term = form.watch("term");
+
+  const { monthlyPayment } = useMortgageCalculator({
+    propertyCost: propertyCost,
+    buyerEquityPercent: _interestRate.toString(),
+    tenorMonths: _term,
   });
 
   const onSubmit = async () => {
@@ -66,7 +83,7 @@ const MortgageCalculator = ({ projectName }: { projectName: string }) => {
               name="term"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Payment Term (Years)</FormLabel>
+                  <FormLabel>Payment Term (Months)</FormLabel>
                   <FormControl>
                     <Input placeholder="2" {...field} />
                   </FormControl>
@@ -80,16 +97,16 @@ const MortgageCalculator = ({ projectName }: { projectName: string }) => {
               name="interestRate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Interest Rate (%)</FormLabel>
+                  <FormLabel>Your Equity (%)</FormLabel>
                   <FormControl>
-                    <Input placeholder="john@example.com" {...field} />
+                    <Input placeholder="10" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="phone"
               render={({ field }) => (
@@ -101,13 +118,13 @@ const MortgageCalculator = ({ projectName }: { projectName: string }) => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading && (
+            <Button type="submit" className="w-full" disabled={true}>
+              {/* {isLoading && (
                 <Loader2 className="size-4 animate-spin transition" />
-              )}
-              {isLoading ? "Loading..." : "Calculate"}
+              )} */}
+              {monthlyPayment}
               {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
             </Button>
           </form>

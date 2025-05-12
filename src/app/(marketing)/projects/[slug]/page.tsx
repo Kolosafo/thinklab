@@ -244,7 +244,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
             </motion.div>
           </Container>
           <div className="md:mr-4 mr-0">
-          <MortgageCalculator projectName={project?.name} /> 
+          <MortgageCalculator projectName={project?.name} propertyCost={35000000} /> 
           </div>
           {/* <MortgageCalculator projectName={project?.name} /> */}
         </section>
