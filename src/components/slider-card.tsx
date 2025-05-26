@@ -10,19 +10,19 @@ import "swiper/css/autoplay";
 
 import { Pagination, Autoplay } from "swiper/modules";
 
-import { MapPinMinusInside } from "lucide-react";
+// import { MapPinMinusInside } from "lucide-react";
 import { ServiceData } from "@/lib/constants/slider-items";
-import { motion } from "motion/react";
-import { useRef, useState } from "react";
+// import { motion } from "motion/react";
+// import { useRef, useState } from "react";
 import CustomAnimation from "./animation/animation";
 import { useRouter } from "next/navigation";
 import NewPropertyCard from "./NewPropertyCard";
 
 // export const properties
 const ActiveSlider = () => {
-  const [detailPosition, setDetailPosition] = useState("20%");
-  const swiperOneRef = useRef<any>(null);
-  const swiperTwoRef = useRef<any>(null);
+  // const [detailPosition, setDetailPosition] = useState("20%");
+  // const swiperOneRef = useRef<any>(null);
+  // const swiperTwoRef = useRef<any>(null);
 
   const router = useRouter();
   return (
