@@ -1,6 +1,16 @@
 "use client";
 
-import { Home, Plus, ChartBar, FileUser } from "lucide-react";
+import {
+  Home,
+  Plus,
+  ChartBar,
+  FileUser,
+  Hammer,
+  LetterText,
+  BookCheck,
+  List,
+  User,
+} from "lucide-react";
 import * as React from "react";
 
 import { NavLinks } from "@/components/navigation/nav-links";
@@ -22,6 +32,16 @@ const links = [
     icon: Home,
   },
   {
+    name: "Projects",
+    url: "/admin/projects",
+    icon: List,
+  },
+  {
+    name: "New Project",
+    url: "/admin/new-project",
+    icon: Hammer,
+  },
+  {
     name: "Applications",
     url: "/admin/applications",
     icon: FileUser,
@@ -36,16 +56,22 @@ const links = [
     url: "/admin/listings",
     icon: ChartBar,
   },
-  // {
-  //   name: "Appoinments",
-  //   url: "/admin/apointment",
-  //   icon: Mail,
-  // },
-  // {
-  //   name: "Agents",
-  //   url: "/admin/agents",
-  //   icon: Home,
-  // },
+  {
+    name: "About Info",
+    url: "/admin/about",
+    icon: LetterText,
+  },
+  {
+    name: "Project Title Info",
+    url: "/admin/projectTitle",
+    icon: BookCheck,
+  },
+
+  {
+    name: "Team",
+    url: "/admin/team-members",
+    icon: User,
+  },
 ];
 
 export function AdminSidebar({

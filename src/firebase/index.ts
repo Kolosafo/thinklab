@@ -21,4 +21,7 @@ export const db = getFirestore(app);
 export const companyCollectionRef = collection(db, "company");
 export const agentCollectionRef = collection(db, "agent_data");
 export const propertyCollectionRef = collection(db, "properties");
+export const projectsCollectionRef = collection(db, "projects");
+export const aboutCollectionRef = collection(db, "about");
+export const companyInfoRef = collection(db, "thinklab-site-info");
 // export const userInfoCollectionRef = collection(db, "userInfo");

@@ -5,12 +5,23 @@
 import { ProjectSection } from "@/components/sections/projects";
 import ActiveSlider from "@/components/slider-card";
 import { Button } from "@/components/ui/button";
+import { useGetCompanyInfo } from "@/hooks/useGetCompanyInfo";
+import { IRootState } from "@/redux/store";
 // import { listings } from "@/data/listings";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import OurTeam from "./new-about/ourTeam";
 // import Link from "next/link";
 
 export default function Home() {
+  const { fetchCompanyInfo } = useGetCompanyInfo();
+
+  const { companyInfo } = useSelector((store: IRootState) => store.companyInfo);
+  useEffect(() => {
+    fetchCompanyInfo();
+  }, []);
   // const trendingProperties = listings
   //   .filter((listing) => listing.owner === "ThinkLab")
   //   .slice(0, 8);
@@ -82,7 +93,7 @@ export default function Home() {
         </div> */}
         <div style={{ zIndex: 50 }} className="container z-50 w-full">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-white md:mt-20 text-center mt-28">
-            Our Featured Properties
+            Our Featured Projects
           </h1>
           <ActiveSlider />
         </div>
@@ -160,15 +171,16 @@ export default function Home() {
       {/* About Us Section */}
       <section className="w-full py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-4">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               About Us
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We are a team of experienced professionals who are dedicated to
-              providing the best possible service to our clients.
+              {companyInfo.about}
             </p>
           </div>
+          <OurTeam/>
+          <div className="mb-16"></div>
         </div>
       </section>
 
@@ -186,7 +198,7 @@ export default function Home() {
             size="lg"
             className="bg-white text-red-600 hover:bg-gray-100 rounded-full px-8 cursor-pointer"
             onClick={() => {
-              router.push("/auth/register")
+              router.push("/auth/register");
             }}
           >
             Get Started Today

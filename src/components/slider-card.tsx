@@ -16,6 +16,7 @@ import { motion } from "motion/react";
 import { useRef, useState } from "react";
 import CustomAnimation from "./animation/animation";
 import { useRouter } from "next/navigation";
+import NewPropertyCard from "./NewPropertyCard";
 
 // export const properties
 const ActiveSlider = () => {
@@ -99,54 +100,7 @@ const ActiveSlider = () => {
             className=""
             style={{ display: "flex" }}
           >
-            <motion.div
-              onHoverStart={() => {
-                setDetailPosition("100%");
-                if (swiperOneRef?.current && swiperTwoRef?.current) {
-                  swiperOneRef.current.autoplay.stop();
-                  swiperTwoRef.current.autoplay.stop();
-                }
-              }}
-              onHoverEnd={() => {
-                setDetailPosition("20%");
-                if (swiperOneRef?.current && swiperTwoRef?.current) {
-                  swiperOneRef.current.autoplay.start();
-                  swiperTwoRef.current.autoplay.start();
-                }
-              }}
-              className="flex flex-col gap-6 mb-20 group relative shadow-lg text-white rounded-xl px-6 py-8 h-[150px] w-[215px] lg:h-[500px] lg:w-[450px] overflow-hidden cursor-pointer"
-            >
-              <div className="bg-gradient-to-t from-black/40 to-black/10 absolute inset-0 bg-cover bg-center z-10"></div>
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${item.backgroundImage})` }}
-              />
-              {/* <div className="absolute inset-0 opacity-10 group-hover:opacity-50" /> */}
-              <motion.div
-                className={`absolute flex flex-col gap-3 w-full bottom-0 left-0 z-30 p-5`}
-                // initial={{ bottom: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                animate={{
-                  height: detailPosition,
-                  backgroundColor: detailPosition === "20%" ? "" : "#fe00007e",
-                  paddingTop: detailPosition === "20%" ? "" : 100,
-                }}
-                // whileHover={{ height: "100%" }}
-              >
-                {/* <item.icon className="text-blue-600 group-hover:text-blue-400 w-[32px] h-[32px]" /> */}
-                <h1 className="text-xl lg:text-4xl font-bold text-white">
-                  {item.title}{" "}
-                </h1>
-                <div className="flex flex-row items-center space-x-2 mt-1.5">
-                  <MapPinMinusInside />
-                  <p className="font-bold text-xl">{item.location}</p>
-                </div>
-                {detailPosition !== "20%" && (
-                  <p className="lg:text-base font-semibold">{item.content} </p>
-                )}
-              </motion.div>
-              {/* <ArrowRight className="absolute bottom-5 left-5 w-[35px] h-[35px] text-white group-hover:text-blue-500 group-hover:rotate-45 duration-100" /> */}
-            </motion.div>
+            <NewPropertyCard listing={item} />
           </SwiperSlide>
         ))}
       </Swiper>

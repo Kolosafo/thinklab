@@ -1,8 +1,20 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import AnimatedText from "@/components/motion/animated-text";
+import { useSelector } from "react-redux";
+import { IRootState } from "@/redux/store";
+import { useGetCompanyInfo } from "@/hooks/useGetCompanyInfo";
+import OurTeam from "../new-about/ourTeam";
 
 function About() {
+  const { companyInfo } = useSelector((store: IRootState) => store.companyInfo);
+  const { fetchCompanyInfo } = useGetCompanyInfo();
+
+  useEffect(() => {
+    fetchCompanyInfo();
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -42,12 +54,13 @@ function About() {
             highlight
           />
           <AnimatedText
-            text="We are a team of experienced architects and designers who are dedicated to creating innovative and inspiring designs."
+            text={companyInfo.about}
             className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-12"
             delay={0.5}
           />
         </div>
       </section>
+      <OurTeam/>
     </div>
   );
 }

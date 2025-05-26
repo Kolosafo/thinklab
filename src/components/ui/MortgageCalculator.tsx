@@ -74,7 +74,7 @@ const MortgageCalculator = ({
     <div className="w-full lg:w-[400px] sticky top-24 h-fit ml-4">
       <div className="border rounded-xl p-6 shadow-sm">
         <div className="mb-6">
-          <p className="text-xl font-bold">{projectName} Mortgage Calculator</p>
+          <p className="text-xl font-bold">{projectName} Fulus Calculator</p>
         </div>
 
         <Form {...form}>

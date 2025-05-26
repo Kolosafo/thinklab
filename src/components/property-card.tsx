@@ -20,7 +20,7 @@ import {
   Grid,
 } from "lucide-react";
 
-interface PropertyCardProps {
+export interface PropertyCardProps {
   listing: Listing;
 }
 
