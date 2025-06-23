@@ -30,6 +30,7 @@ function NewProject() {
     project,
     handleUpdateRawImages,
     rawImages,
+    setProject,
   } = useCreateProject();
   // const { isLogged } = useSelector((store: IRootState) => store.user);
   // const router = useRouter();
@@ -59,7 +60,7 @@ function NewProject() {
           <Textarea
             id="description"
             onChange={(e) => handleUpdateProject("description", e.target.value)}
-            placeholder="Briefly Write about this project"
+            placeholder="Write about this project"
           />
         </div>
         <div className="space-y-2">
@@ -137,6 +138,29 @@ function NewProject() {
             ))}
           </div>
         )}
+
+        {/* <span className="text-2xl -mb-8 mt-2">Project Features</span> */}
+        <div className="grid grid-cols-2 gap-4 mt-6">
+          {Object.entries(project.features).map(([key, value]) => (
+            <label key={key} className="flex items-center gap-2 capitalize">
+              <input
+                type="checkbox"
+                checked={value}
+                onChange={(e) =>
+                  setProject((prev) => ({
+                    ...prev,
+                    features: {
+                      ...prev.features,
+                      [key]: e.target.checked,
+                    },
+                  }))
+                }
+              />
+              {key.replace(/([A-Z])/g, " $1")}
+            </label>
+          ))}
+        </div>
+
         <Button type="submit" disabled={isLoading} className="w-full mt-8">
           {isLoading && <Loader2 className="size-4 animate-spin transition" />}
           {isLoading ? "Processing..." : "Submit"}

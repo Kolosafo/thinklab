@@ -3,12 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useCompanyInfo } from "@/hooks/useCompanyInfo";
-import { IRootState } from "@/redux/store";
+// import { IRootState } from "@/redux/store";
 // import { IRootState } from "@/redux/store";
 import { Loader2 } from "lucide-react";
 // import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 // import { useSelector } from "react-redux";
 export type PropertyListing = {
   state: string;
@@ -24,16 +24,10 @@ export type PropertyListing = {
 function ProjectTitleForm() {
   const { isLoading, handleUpdateProjectListingData } = useCompanyInfo();
   const [projectListData, setProjectListData] = useState("");
-  const { companyInfo } = useSelector((store: IRootState) => store.companyInfo);
   return (
     <div className="w-full max-w-2xl mx-auto mt-8">
       <form
-        onSubmit={(e) =>
-          handleUpdateProjectListingData(e, {
-            ...companyInfo,
-            projectListingData: projectListData,
-          })
-        }
+        onSubmit={(e) => handleUpdateProjectListingData(e, projectListData)}
         className="flex flex-col gap-6"
       >
         <span className="text-3xl font-semibold">Project List Title</span>

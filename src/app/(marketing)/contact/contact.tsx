@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Container from "@/components/shared/container";
 import { Input } from "@/components/ui/input";
@@ -8,20 +8,29 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
+import { useGetContactUs } from "@/hooks/useGetContactUs";
+import { useSelector } from "react-redux";
+import { IRootState } from "@/redux/store";
+import LoadingPage from "../loading";
 
 export default function ContactPage() {
+  const { fetchContactUs } = useGetContactUs();
   // Animation variants
   const variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
+  const { contactUs } = useSelector((store: IRootState) => store.companyInfo);
 
-  return (
+  useEffect(() => {
+    fetchContactUs();
+  }, []);
+  return contactUs.headerTitle ? (
     <div className="min-h-screen">
       <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/contact-hero.jpg"
+            src={contactUs.mainImg ? contactUs.mainImg : "/contact-hero.jpg"}
             alt="Book a meeting"
             fill
             priority
@@ -54,12 +63,9 @@ export default function ContactPage() {
         <Container>
           <div className="max-w-2xl mb-16 text-left">
             <h2 className="text-2xl md:text-3xl font-bold text-primary mb-3">
-              Get in Touch
+              {contactUs.headerTitle}
             </h2>
-            <p className="text-base text-gray-600">
-              Have questions or ready to schedule a visit? Fill out the form
-              below, and we&apos;ll get back to you shortly.
-            </p>
+            <p className="text-base text-gray-600">{contactUs.description}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
@@ -153,7 +159,7 @@ export default function ContactPage() {
               className="relative h-full min-h-[400px] hidden md:block"
             >
               <Image
-                src="/contact-image.jpg"
+                src={contactUs.subImg ? contactUs.subImg : "/contact-image.jpg"}
                 alt="Modern building interior"
                 fill
                 className="object-cover rounded-lg"
@@ -163,5 +169,7 @@ export default function ContactPage() {
         </Container>
       </section>
     </div>
+  ) : (
+    <LoadingPage />
   );
 }

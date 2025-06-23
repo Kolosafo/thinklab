@@ -1,7 +1,11 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { companyInfoRef } from "@/firebase";
-import { loadCompanyInfo } from "@/redux/info/infoSlice";
+import {
+  loadCompanyInfo,
+  loadLandingData,
+  updateProjectTitle,
+} from "@/redux/info/infoSlice";
 import { getDocs } from "firebase/firestore";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -21,8 +25,10 @@ export const useGetCompanyInfo = () => {
       id: doc.id,
     }));
 
-    // console.log("GUESTS: ", allGuests);
-    dispatch(loadCompanyInfo(companyInfo[0]));
+    console.log("GUESTS: ", companyInfo);
+    dispatch(loadCompanyInfo(companyInfo[2]));
+    dispatch(updateProjectTitle(companyInfo[1].projectTitle));
+    dispatch(loadLandingData(companyInfo[0]));
     setIsLoading(false);
   };
   return {

@@ -71,7 +71,7 @@ const MortgageCalculator = ({
     setIsLoading(false);
   };
   return (
-    <div className="w-full lg:w-[400px] sticky top-24 h-fit ml-4">
+    <div className="w-full lg:w-full sticky top-24 h-fit ml-4">
       <div className="border rounded-xl p-6 shadow-sm">
         <div className="mb-6">
           <p className="text-xl font-bold">{projectName} Fulus Calculator</p>

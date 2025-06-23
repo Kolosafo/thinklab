@@ -10,6 +10,8 @@ import {
   BookCheck,
   List,
   User,
+  LandPlot,
+  Phone,
 } from "lucide-react";
 import * as React from "react";
 
@@ -60,6 +62,16 @@ const links = [
     name: "About Info",
     url: "/admin/about",
     icon: LetterText,
+  },
+  {
+    name: "Landing Page",
+    url: "/admin/update-landing-page",
+    icon: LandPlot,
+  },
+  {
+    name: "Contact Us",
+    url: "/admin/contact-us",
+    icon: Phone,
   },
   {
     name: "Project Title Info",

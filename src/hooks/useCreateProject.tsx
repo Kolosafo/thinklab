@@ -12,20 +12,18 @@ export type ProjectCreationData = {
   title: string;
   description: string;
   location: string;
-  //   keyFeatureOne: {
-  //     title: string;
-  //     description: string;
-  //   };
-  //   keyFeatureTwo: {
-  //     title: string;
-  //     description: string;
-  //   };
-  //   keyFeatureThree: {
-  //     title: string;
-  //     description: string;
-  //   };
   images: string[];
   progressReportImages: string[];
+  features: {
+    fibreOptic: boolean;
+    plateNumberRecognition: boolean;
+    streetLight: boolean;
+    swimmingPool: boolean;
+    gym: boolean;
+    security: boolean;
+    motionSensor: boolean;
+    playground: boolean;
+  };
 };
 
 export const useCreateProject = () => {
@@ -45,6 +43,16 @@ export const useCreateProject = () => {
     location: "",
     images: [],
     progressReportImages: [],
+    features: {
+      fibreOptic: false,
+      plateNumberRecognition: false,
+      streetLight: false,
+      swimmingPool: false,
+      gym: false,
+      security: false,
+      motionSensor: false,
+      playground: false,
+    },
   });
 
   const handleUpdateProject = (
