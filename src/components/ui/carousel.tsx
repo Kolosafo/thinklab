@@ -274,6 +274,8 @@ function CarouselContent({
     setItemsCount(itemsLength);
   }, [itemsLength, setItemsCount]);
 
+
+  console.log("VISIBLE ITEM: ",visibleItemsCount)
   const onDragEnd = () => {
     const x = dragX.get();
 
@@ -299,9 +301,9 @@ function CarouselContent({
       style={{
         x: disableDrag ? undefined : dragX,
       }}
-      animate={{
-        translateX: `-${index * (100 / visibleItemsCount)}%`,
-      }}
+      // animate={{
+      //   translateX: `-${index * (100 / visibleItemsCount)}%`,
+      // }}
       onDragEnd={disableDrag ? undefined : onDragEnd}
       transition={
         transition || {
