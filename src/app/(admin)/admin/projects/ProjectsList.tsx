@@ -9,22 +9,26 @@ import { Button } from "@/components/ui/button";
 import LoadingPage from "@/app/(dashboard)/loading";
 import { useGetProjects } from "@/hooks/useGetProjects";
 import AdminProjectCard from "@/components/projects/AdminProjectCard";
+import { useCheckAccess } from "@/hooks/useCheckAccess";
 
 export default function DashboardPage() {
   const { fetchProjects, isFetchingProjects } = useGetProjects();
   const { projects } = useSelector((store: IRootState) => store.projects);
+  const { isProjectManagement, isMasterAdmin } = useCheckAccess();
 
   const router = useRouter();
   useEffect(() => {
     fetchProjects();
   }, []);
 
-//   useEffect(() => {
-//     if (!isLogged) {
-//       router.push("/auth/login");
-//     }
-//   }, [isLogged, router]);
-  return (
+  //   useEffect(() => {
+  //     if (!isLogged) {
+  //       router.push("/auth/login");
+  //     }
+  //   }, [isLogged, router]);
+  return !isProjectManagement && !isMasterAdmin ? (
+    <span className="text-xl mt-20">YOU DO NOT HAVE ACCESS TO THIS PAGE</span>
+  ) : (
     <div>
       <span className="text-3xl font-semibold">Projects Dashboard</span>
       {isFetchingProjects ? (

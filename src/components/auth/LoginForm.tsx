@@ -3,10 +3,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "@/components/ui/sonner";
 
-import { EyeClosedIcon, EyeIcon, Loader2 } from "lucide-react";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -18,48 +16,57 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useLogin } from "@/hooks/useLogin";
-import { useDispatch } from "react-redux";
-import { handleUpdateCompany, login } from "@/redux/user/userSlice";
-import { useGetApplications } from "@/hooks/useGetApplications";
-import { loadAgent } from "@/redux/agent/agentSlice";
+// import { useLogin } from "@/hooks/useLogin";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  // handleUpdateCompany,
+  // login,
+  handleMasterAdminLogin,
+} from "@/redux/user/userSlice";
+import { IRootState } from "@/redux/store";
+import { useRouter } from "next/navigation";
+// import { useGetApplications } from "@/hooks/useGetApplications";
+// import { loadAgent } from "@/redux/agent/agentSlice";
 
 function LoginForm() {
-  const { fetchApplications, checkIsAgent } = useGetApplications();
+  // const { fetchApplications, checkIsAgent } = useGetApplications();
 
   const router = useRouter();
   const [type, setType] = useState<"text" | "password">("password");
   const dispatch = useDispatch();
+  const { masterAdminLogin } = useSelector((store: IRootState) => store.user);
 
-  const onSuccess = async ({
-    loginData,
-    companyData,
-  }: {
-    loginData: any;
-    companyData: any;
-  }) => {
-    const agents = await fetchApplications();
-    // console.log("LOGIN DATA: ", loginData);
-    const checkUser = checkIsAgent(agents, loginData.email);
-    dispatch(login(loginData));
-    dispatch(handleUpdateCompany(companyData));
-    if (checkUser) {
-      dispatch(loadAgent(checkUser));
-    }
-    router.push(checkUser ? "/dashboard" : "/admin");
-  };
-  const onError = () => {
-    toast.error("Error logging you in");
-  };
-  const { handleLogin, loginError, loginLoading } = useLogin({
-    onSuccess,
-    onError,
-  });
+  // const onSuccess = async ({
+  //   loginData,
+  //   companyData,
+  // }: {
+  //   loginData: any;
+  //   companyData: any;
+  // }) => {
+  //   const agents = await fetchApplications();
+  //   // console.log("LOGIN DATA: ", loginData);
+  //   const checkUser = checkIsAgent(agents, loginData.email);
+  //   dispatch(login(loginData));
+  //   dispatch(handleUpdateCompany(companyData));
+  //   if (checkUser) {
+  //     dispatch(loadAgent(checkUser));
+  //   }
+  //   router.push(checkUser ? "/dashboard" : "/admin");
+  // };
+  // const onError = () => {
+  //   toast.error("Error logging you in");
+  // };
+  // const { handleLogin, loginError, loginLoading } = useLogin({
+  //   onSuccess,
+  //   onError,
+  // });
 
   const [data, setData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
+
+  const [loginError, setLoginError] = useState("");
 
   //   const onSubmit = async (formdata: AccountData) => {
   //     try {
@@ -92,18 +99,27 @@ function LoginForm() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          handleLogin({ ...data });
+          setLoginError("");
+          if (
+            masterAdminLogin.username !== data.username ||
+            masterAdminLogin.password !== data.password
+          ) {
+            setLoginError("Invalid Credentials");
+            return;
+          }
+          dispatch(handleMasterAdminLogin(data));
+          router.push("/admin")
         }}
         className="space-y-6"
       >
         <CardContent className="space-y-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">Username</Label>
             <Input
               onChange={(val) => {
-                setData({ ...data, email: val.target.value });
+                setData({ ...data, username: val.target.value });
               }}
-              type="email"
+              type="text"
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -148,23 +164,14 @@ function LoginForm() {
           <Button
             type="submit"
             className="flex items-center gap-2 w-full"
-            disabled={loginLoading}
+            // disabled={loginLoading}
           >
-            {loginLoading && (
+            {/* {loginLoading && (
               <Loader2 className="size-4 animate-spin transition" />
-            )}
-            {loginLoading ? "Logging In..." : "Login"}
+            )} */}
+            {"Login"}
+            {/* {loginLoading ? "Logging In..." : "Login"} */}
           </Button>
-
-          <p className="text-center text-muted-foreground text-xs">
-            Don&apos;t have an account?{" "}
-            <Link
-              href="/auth/register"
-              className="hover:text-primary underline"
-            >
-              Register
-            </Link>
-          </p>
         </CardFooter>
       </form>
     </Card>

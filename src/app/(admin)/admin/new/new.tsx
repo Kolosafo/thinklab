@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { propertyCollectionRef } from "@/firebase";
+import { useCheckAccess } from "@/hooks/useCheckAccess";
 import { useSaveImageToFirebase } from "@/hooks/useSaveImageToFirebase";
 import { states } from "@/lib/constants/states";
 import { addProperty } from "@/redux/properties/propertySlice";
@@ -38,6 +39,8 @@ function New() {
   const { company, user, isLogged } = useSelector(
     (store: IRootState) => store.user
   );
+
+  const { isMarketing, isMasterAdmin } = useCheckAccess();
 
   const [isLoading, setIsLoading] = useState(false);
   const [uploadReady, setUploadReady] = useState(false);
@@ -117,7 +120,9 @@ function New() {
       router.push("/auth/login");
     }
   }, [isLogged, router]);
-  return (
+  return !isMarketing && !isMasterAdmin ? (
+    <span className="text-xl mt-20">YOU DO NOT HAVE ACCESS TO THIS PAGE</span>
+  ) : (
     <div className="w-full max-w-2xl mx-auto mt-8">
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <span className="text-3xl font-semibold">New Property Listing</span>

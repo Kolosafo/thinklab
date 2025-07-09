@@ -9,8 +9,10 @@ import Lottie from "lottie-react";
 import { Button } from "@/components/ui/button";
 import LoadingPage from "@/app/(dashboard)/loading";
 import { useGetProperties } from "@/hooks/useGetProperties";
+import { useCheckAccess } from "@/hooks/useCheckAccess";
 
 export default function DashboardPage() {
+  const { isMarketing, isMasterAdmin } = useCheckAccess();
   const { fetchProperties, isFetchingProperties } = useGetProperties();
   const { properties } = useSelector((store: IRootState) => store.properties);
   const { isLogged } = useSelector((store: IRootState) => store.user);
@@ -27,7 +29,9 @@ export default function DashboardPage() {
       router.push("/auth/login");
     }
   }, [isLogged, router]);
-  return (
+  return !isMarketing && !isMasterAdmin ? (
+    <span className="text-xl mt-20">YOU DO NOT HAVE ACCESS TO THIS PAGE</span>
+  ) : (
     <div>
       <span className="text-3xl font-semibold">Dashboard</span>
       {isFetchingProperties ? (
@@ -37,9 +41,7 @@ export default function DashboardPage() {
           <h1 className="mb-8 text-3xl font-semibold text-red-500">
             SORRY YOUR APPLICATION WAS REJECTED!
           </h1>
-          <h1 className="text-xl font-semibold">
-            You can apply again.
-          </h1>
+          <h1 className="text-xl font-semibold">You can apply again.</h1>
         </div>
       ) : (
         <div className="w-full my-8 flex-row space-x-10 flex">

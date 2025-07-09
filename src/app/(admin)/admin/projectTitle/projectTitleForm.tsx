@@ -2,6 +2,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useCheckAccess } from "@/hooks/useCheckAccess";
 import { useCompanyInfo } from "@/hooks/useCompanyInfo";
 // import { IRootState } from "@/redux/store";
 // import { IRootState } from "@/redux/store";
@@ -22,9 +23,12 @@ export type PropertyListing = {
   company: string;
 };
 function ProjectTitleForm() {
+  const {isLegal, isMasterAdmin} = useCheckAccess();
   const { isLoading, handleUpdateProjectListingData } = useCompanyInfo();
   const [projectListData, setProjectListData] = useState("");
-  return (
+  return !isLegal && !isMasterAdmin ? (
+    <span className="text-xl mt-20">YOU DO NOT HAVE ACCESS TO THIS PAGE</span>
+  ) : (
     <div className="w-full max-w-2xl mx-auto mt-8">
       <form
         onSubmit={(e) => handleUpdateProjectListingData(e, projectListData)}

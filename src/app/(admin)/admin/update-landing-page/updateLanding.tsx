@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 // import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useCheckAccess } from "@/hooks/useCheckAccess";
 import { useCompanyInfo } from "@/hooks/useCompanyInfo";
 // import { LandingDataType } from "@/redux/info/infoSlice";
 import { IRootState } from "@/redux/store";
@@ -42,6 +43,7 @@ export type FullAboutData = {
 };
 
 function NewProject() {
+  const { isMarketing, isMasterAdmin } = useCheckAccess();
   const {
     isLoading,
     handleSubmitLandingData,
@@ -60,7 +62,9 @@ function NewProject() {
       }));
     }
   }, [setLandingData, landingInfo.bgVideo]);
-  return (
+  return !isMarketing && !isMasterAdmin ? (
+    <span className="text-xl mt-20">YOU DO NOT HAVE ACCESS TO THIS PAGE</span>
+  ) : (
     <div className="w-full max-w-2xl mx-auto mt-8">
       <form onSubmit={handleSubmitLandingData} className="flex flex-col gap-6">
         <span className="text-3xl font-semibold">Landing Page</span>

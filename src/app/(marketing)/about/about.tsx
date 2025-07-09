@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AnimatedText from "@/components/motion/animated-text";
-import AnimatedImage from "@/components/motion/animated-image";
 import {
   HomeIcon,
   PhoneIcon,
-  LinkedinIcon,
-  TwitterIcon,
-  MailIcon,
+  // LinkedinIcon,
+  // TwitterIcon,
+  // MailIcon,
   Smile,
   Clock,
   Trophy,
@@ -24,82 +23,86 @@ import AnimatedCounter from "@/components/motion/animated-counter";
 import { useSelector } from "react-redux";
 import { IRootState } from "@/redux/store";
 import { useGetCompanyInfo } from "@/hooks/useGetCompanyInfo";
+import TeamMember from "@/components/TeamMember";
+import { useGetTeam } from "@/hooks/useGetTeam";
+import { TeamMemberData } from "@/hooks/useCreateTeam";
+import { useGetAdminLogins } from "@/hooks/useGetAdminLogins";
 
 // Team members data
-const teamMembers = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    role: "Chief Executive Officer",
-    description:
-      "Visionary leader with 15+ years in real estate development and sustainable architecture.",
-    image:
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
-    linkedin: "#",
-    twitter: "#",
-    email: "sarah@thinklab.com",
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    role: "Chief Technology Officer",
-    description:
-      "Tech innovator revolutionizing real estate through cutting-edge technology solutions.",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-    linkedin: "#",
-    twitter: "#",
-    email: "michael@thinklab.com",
-  },
-  {
-    id: 3,
-    name: "Emily Rodriguez",
-    role: "Head of Design",
-    description:
-      "Award-winning architect creating spaces that inspire and transform communities.",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
-    linkedin: "#",
-    twitter: "#",
-    email: "emily@thinklab.com",
-  },
-  {
-    id: 4,
-    name: "David Thompson",
-    role: "Director of Operations",
-    description:
-      "Operations expert ensuring seamless project delivery and exceptional quality standards.",
-    image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face",
-    linkedin: "#",
-    twitter: "#",
-    email: "david@thinklab.com",
-  },
-  {
-    id: 5,
-    name: "Lisa Wang",
-    role: "Sustainability Lead",
-    description:
-      "Environmental champion driving green building practices and sustainable development.",
-    image:
-      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&h=400&fit=crop&crop=face",
-    linkedin: "#",
-    twitter: "#",
-    email: "lisa@thinklab.com",
-  },
-  {
-    id: 6,
-    name: "James Mitchell",
-    role: "Business Development",
-    description:
-      "Strategic partnerships expert expanding ThinkLab's reach and market presence.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-    linkedin: "#",
-    twitter: "#",
-    email: "james@thinklab.com",
-  },
-];
+// const teamMembers = [
+//   {
+//     id: 1,
+//     name: "Sarah Johnson",
+//     role: "Chief Executive Officer",
+//     description:
+//       "Visionary leader with 15+ years in real estate development and sustainable architecture.",
+//     image:
+//       "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
+//     linkedin: "#",
+//     twitter: "#",
+//     email: "sarah@thinklab.com",
+//   },
+//   {
+//     id: 2,
+//     name: "Michael Chen",
+//     role: "Chief Technology Officer",
+//     description:
+//       "Tech innovator revolutionizing real estate through cutting-edge technology solutions.",
+//     image:
+//       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+//     linkedin: "#",
+//     twitter: "#",
+//     email: "michael@thinklab.com",
+//   },
+//   {
+//     id: 3,
+//     name: "Emily Rodriguez",
+//     role: "Head of Design",
+//     description:
+//       "Award-winning architect creating spaces that inspire and transform communities.",
+//     image:
+//       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
+//     linkedin: "#",
+//     twitter: "#",
+//     email: "emily@thinklab.com",
+//   },
+//   {
+//     id: 4,
+//     name: "David Thompson",
+//     role: "Director of Operations",
+//     description:
+//       "Operations expert ensuring seamless project delivery and exceptional quality standards.",
+//     image:
+//       "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face",
+//     linkedin: "#",
+//     twitter: "#",
+//     email: "david@thinklab.com",
+//   },
+//   {
+//     id: 5,
+//     name: "Lisa Wang",
+//     role: "Sustainability Lead",
+//     description:
+//       "Environmental champion driving green building practices and sustainable development.",
+//     image:
+//       "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&h=400&fit=crop&crop=face",
+//     linkedin: "#",
+//     twitter: "#",
+//     email: "lisa@thinklab.com",
+//   },
+//   {
+//     id: 6,
+//     name: "James Mitchell",
+//     role: "Business Development",
+//     description:
+//       "Strategic partnerships expert expanding ThinkLab's reach and market presence.",
+//     image:
+//       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+//     linkedin: "#",
+//     twitter: "#",
+//     email: "james@thinklab.com",
+//   },
+// ];
 
 // Statistics data
 // const stats = [
@@ -123,15 +126,41 @@ const containerVariants = {
   },
 };
 
+export type MemberData = {
+  id: number;
+  name: string;
+  role: string;
+  description: string;
+  image: string;
+  linkedin: string;
+  twitter: string;
+  email: string;
+};
 function Page() {
+  const { fetchAdminLogins } = useGetAdminLogins();
   const { fetchCompanyInfo } = useGetCompanyInfo();
+  const { fetchTeam } = useGetTeam();
 
-  const { companyInfo } = useSelector((store: IRootState) => store.companyInfo);
+  const { companyInfo, teamMembers } = useSelector(
+    (store: IRootState) => store.companyInfo
+  );
+
+  const [showFullScreen, setShowFullScreen] = useState(false);
+  const [memberData, setMemberData] = useState<TeamMemberData | null>(null);
+  const handleDismissModal = () => {
+    setShowFullScreen(false);
+  };
+  const handleShowFullScreen = (data: TeamMemberData) => {
+    setShowFullScreen(true);
+    setMemberData(data);
+  };
   useEffect(() => {
+    fetchAdminLogins();
     fetchCompanyInfo();
+    fetchTeam();
   }, []);
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       {/* Hero Section */}
       <section className='relative w-full h-[80vh] bg-[url("/about-hero.jpg")] bg-cover bg-center bg-fixed flex items-center justify-center overflow-hidden'>
         <div className="absolute inset-0 bg-black/20" />
@@ -194,16 +223,16 @@ function Page() {
               />
             </motion.div>
 
-            <AnimatedImage>
+            {/* <AnimatedImage>
               <div className="relative">
-                <img
-                  src={companyInfo.image}
+                <Image
+                  src={companyInfo.image ?? undefined}
                   alt="Modern Architecture"
                   className="rounded-xl shadow-lg w-full"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl" />
               </div>
-            </AnimatedImage>
+            </AnimatedImage> */}
           </div>
 
           {/* Vision and Mission */}
@@ -411,44 +440,11 @@ function Page() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid md:grid-cols-2 lg:grid-cols-2 gap-8"
           >
             {teamMembers.map((member) => (
               <motion.div key={member.id}>
-                <Card className="text-center h-full hover:shadow-xl transition-all duration-300 group">
-                  <CardContent className="pt-8">
-                    <AnimatedImage>
-                      <div className="relative mb-6">
-                        <img
-                          src={member.image}
-                          alt={member.name}
-                          className="w-32 h-32 rounded-full mx-auto object-cover shadow-lg group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </div>
-                    </AnimatedImage>
-
-                    <h3 className="font-bold text-xl mb-2">{member.name}</h3>
-                    <p className="text-primary font-semibold mb-4">
-                      {member.role}
-                    </p>
-                    <p className="text-gray-600 mb-6 text-sm leading-relaxed">
-                      {member.description}
-                    </p>
-
-                    <div className="flex justify-center space-x-4">
-                      <Button size="sm" variant="ghost" className="p-2">
-                        <LinkedinIcon className="size-4" />
-                      </Button>
-                      <Button size="sm" variant="ghost" className="p-2">
-                        <TwitterIcon className="size-4" />
-                      </Button>
-                      <Button size="sm" variant="ghost" className="p-2">
-                        <MailIcon className="size-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <TeamMember data={member} showModal={handleShowFullScreen} />
               </motion.div>
             ))}
           </motion.div>
@@ -496,6 +492,22 @@ function Page() {
           </motion.div>
         </Container>
       </section>
+
+      {showFullScreen && memberData && (
+        <div
+          style={{
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+          }}
+          className="flex items-center justify-center flex-col bg-red-100/50 fixed top-0 w-screen h-screen p-44"
+        >
+          <TeamMember
+            handleDismiss={handleDismissModal}
+            isFullScreen
+            data={memberData}
+          />
+        </div>
+      )}
     </div>
   );
 }

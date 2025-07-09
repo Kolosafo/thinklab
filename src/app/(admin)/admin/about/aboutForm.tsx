@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 // import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useCheckAccess } from "@/hooks/useCheckAccess";
 import { useCompanyInfo } from "@/hooks/useCompanyInfo";
 // import { IRootState } from "@/redux/store";
 // import { IRootState } from "@/redux/store";
@@ -39,6 +40,7 @@ export type FullAboutData = {
 };
 
 function NewProject() {
+  const { isLegal, isMasterAdmin } = useCheckAccess();
   const {
     isLoading,
     handleSubmit,
@@ -49,7 +51,9 @@ function NewProject() {
   // const [aboutInfo, setAboutInfo] = useState("");
   // const { companyInfo } = useSelector((store: IRootState) => store.companyInfo);
 
-  return (
+  return !isLegal && !isMasterAdmin ? (
+    <span className="text-xl mt-20">YOU DO NOT HAVE ACCESS TO THIS PAGE</span>
+  ) : (
     <div className="w-full max-w-2xl mx-auto mt-8">
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <span className="text-3xl font-semibold">About Us</span>

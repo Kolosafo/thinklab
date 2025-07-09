@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { auth, companyCollectionRef } from "@/firebase";
-import { login } from "@/redux/user/userSlice";
+// import { login } from "@/redux/user/userSlice";
 import { Company } from "@/types";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { addDoc } from "firebase/firestore";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 export const useSignUp = ({
   onSuccess,
@@ -16,7 +16,7 @@ export const useSignUp = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleSubmit = async ({
     email,
@@ -39,9 +39,9 @@ export const useSignUp = ({
     setIsLoading(true);
 
     await createUserWithEmailAndPassword(auth, email, password)
-      .then(async (res) => {
+      .then(async () => {
         // console.log("USER CREATED", res.user.uid);
-        dispatch(login({ email, id: res.user.uid }));
+        // dispatch(login({ email, id: res.user.uid }));
         await onSuccess(email);
       })
       .catch(() => {

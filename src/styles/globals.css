@@ -120,3 +120,29 @@
     @apply bg-background text-foreground;
   }
 }
+@layer components {
+  dialog::backdrop {
+    background-color: #00000080;
+    backdrop-filter: blur(5px);
+  }
+
+  dialog[open] {
+    /* animation: slide-down 500ms ease-out forwards; */
+    display: grid !important;
+    place-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+
+  @keyframes slide-down {
+    from {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}

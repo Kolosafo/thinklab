@@ -25,4 +25,5 @@ export const projectsCollectionRef = collection(db, "projects");
 export const aboutCollectionRef = collection(db, "about");
 export const companyInfoRef = collection(db, "thinklab-site-info");
 export const contactUsInfoRef = collection(db, "contactUs");
+export const adminLoginRef = collection(db, "adminLogins");
 // export const userInfoCollectionRef = collection(db, "userInfo");

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useCheckAccess } from "@/hooks/useCheckAccess";
 import { useCreateTeam } from "@/hooks/useCreateTeam";
 // import { IRootState } from "@/redux/store";
 import { Loader2 } from "lucide-react";
@@ -23,6 +24,7 @@ export type PropertyListing = {
   company: string;
 };
 function NewProject() {
+  const { isMasterAdmin, isComms } = useCheckAccess();
   const {
     isLoading,
     handleSubmit,
@@ -38,7 +40,9 @@ function NewProject() {
   //     router.push("/auth/login");
   //   }
   // }, [isLogged, router]);
-  return (
+  return !isComms && !isMasterAdmin ? (
+    <span className="text-xl mt-20">YOU DO NOT HAVE ACCESS TO THIS PAGE</span>
+  ) : (
     <div className="w-full max-w-2xl mx-auto mt-8">
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <span className="text-3xl font-semibold">New Team Member</span>

@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import {
   Home,
   Plus,
@@ -12,6 +11,7 @@ import {
   User,
   LandPlot,
   Phone,
+  KeyIcon,
 } from "lucide-react";
 import * as React from "react";
 
@@ -27,69 +27,106 @@ import { useSelector } from "react-redux";
 import { IRootState } from "@/redux/store";
 import { HomeLink } from "./home-link";
 
-const links = [
+const allLinks = [
   {
     name: "Admin",
     url: "/admin",
     icon: Home,
+    permission: "masterAdmin",
+  },
+  {
+    name: "Access",
+    url: "/admin/access",
+    icon: KeyIcon,
+    permission: "masterAdmin",
   },
   {
     name: "Projects",
     url: "/admin/projects",
     icon: List,
+    permission: "projectManagement",
   },
   {
     name: "New Project",
     url: "/admin/new-project",
     icon: Hammer,
+    permission: "projectManagement",
   },
   {
     name: "Applications",
     url: "/admin/applications",
     icon: FileUser,
+    permission: "masterAdmin",
   },
   {
     name: "Publish",
     url: "/admin/new",
     icon: Plus,
+    permission: "marketing",
   },
   {
     name: "Listings",
     url: "/admin/listings",
     icon: ChartBar,
+    permission: "marketing",
   },
   {
     name: "About Info",
     url: "/admin/about",
     icon: LetterText,
+    permission: "legal",
   },
   {
     name: "Landing Page",
     url: "/admin/update-landing-page",
     icon: LandPlot,
+    permission: "marketing",
   },
   {
     name: "Contact Us",
     url: "/admin/contact-us",
     icon: Phone,
+    permission: "communications",
   },
   {
     name: "Project Title Info",
     url: "/admin/projectTitle",
     icon: BookCheck,
+    permission: "legal",
   },
-
   {
     name: "Team",
     url: "/admin/team-members",
     icon: User,
+    permission: "communications",
   },
 ];
 
 export function AdminSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const { user } = useSelector((store: IRootState) => store.user);
+  const {
+    user,
+    isMasterAdmin,
+    isMarketing,
+    isLegal,
+    isComms,
+    isProjectManagement,
+  } = useSelector((store: IRootState) => store.user);
+
+  const hasPermission = (permission: string): boolean => {
+    if (isMasterAdmin) return true;
+    return (
+      (permission === "marketing" && isMarketing) ||
+      (permission === "legal" && isLegal) ||
+      (permission === "communications" && isComms) ||
+      (permission === "projectManagement" && isProjectManagement)
+    );
+  };
+
+  const filteredLinks = allLinks.filter((link) =>
+    hasPermission(link.permission)
+  );
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -97,7 +134,7 @@ export function AdminSidebar({
         <HomeLink />
       </SidebarHeader>
       <SidebarContent>
-        <NavLinks links={links} />
+        <NavLinks links={filteredLinks} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser

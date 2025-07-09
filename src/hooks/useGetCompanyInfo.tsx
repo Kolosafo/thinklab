@@ -25,7 +25,7 @@ export const useGetCompanyInfo = () => {
       id: doc.id,
     }));
 
-    console.log("GUESTS: ", companyInfo);
+    // console.log("GUESTS: ", companyInfo);
     dispatch(loadCompanyInfo(companyInfo[2]));
     dispatch(updateProjectTitle(companyInfo[1].projectTitle));
     dispatch(loadLandingData(companyInfo[0]));

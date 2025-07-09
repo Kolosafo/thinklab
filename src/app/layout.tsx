@@ -12,5 +12,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <BaseWrapper>{children}</BaseWrapper>;
+  return (
+    <BaseWrapper>
+      {children}
+      <div id="portal"></div>
+    </BaseWrapper>
+  );
 }
