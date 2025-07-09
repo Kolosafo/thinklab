@@ -62,7 +62,7 @@ function MarketingLogin() {
               onChange={(val) => {
                 setData({ ...data, username: val.target.value });
               }}
-              type="email"
+              type="text"
             />
           </div>
           <div className="flex flex-col gap-2">
