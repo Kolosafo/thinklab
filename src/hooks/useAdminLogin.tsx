@@ -38,7 +38,7 @@ export const useAdminLogin = ({
 
       const match = adminLoginData.find(
         (item: any) =>
-          item.type === type &&
+          item.department === type.toLowerCase() &&
           item.username === username &&
           item.password === password
       );
